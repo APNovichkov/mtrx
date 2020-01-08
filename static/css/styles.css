@@ -1,0 +1,60 @@
+body {
+     background-image: url('background.jpg');
+     background-size: cover;
+}
+
+table, th, td {
+    border: 1px solid #EEEEEE;
+}
+
+td, h3{
+    padding-top: 10px;
+    padding-left: 10px;
+    /* padding-right: 10px; */
+    color: #EEEEEE
+}
+
+.form-control::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #EEEEEE;
+}
+
+.matrix-wrapper{
+    margin-top: 100px;
+}
+
+.matrix-input{
+    width: 45px;
+    background-color:
+    transparent; color: #EEEEEE;
+}
+
+.btn-wrapper{
+    margin-top: 40px;
+}
+
+.button-style{
+    background-color: transparent;
+    border-color: #EEEEEE;
+    color: #EEEEEE;
+}
+
+.button-style:hover{
+    background-color: #fe9801;
+    border-color: #fe9801;
+    color: #FFFFFF;
+}
+
+
+.no-image-chosen-wrapper{
+    margin-top: 60px;
+}
+
+.pic-button:hover{
+    background-color: #fe9801;
+    border-color: #fe9801;
+    color: #FFFFFF;
+}
+
+h2{
+    color: #EEEEEE;
+}

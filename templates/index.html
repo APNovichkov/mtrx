@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<nav class="navbar navbar-expand navbar-light">
+    <a class="navbar-brand" style="color: #EEEEEE;" href="/">MTRX</a>
+</nav>
+
+{% if image_chosen %}
+    <div class="matrix-wrapper d-flex justify-content-center">
+        <form action="/generate-image">
+            <table style="margin-left: 30px">
+                <tr>
+                    <td>
+                        <input type="text" name="r1c1" class="matrix-input form-control mb-2 mr-sm-2" placeholder="-1"/>
+                    </td>
+                    <td>
+                        <input type="text" name="r1c2" class="matrix-input form-control mb-2 mr-sm-2" placeholder="-1"/>
+                    </td>
+                    <td>
+                        <input type="text" name="r1c3" class="matrix-input form-control mb-2 mr-sm-2" placeholder="-1"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" name="r2c1" class="matrix-input form-control mb-2 mr-sm-2" placeholder="-1"/>
+                    </td>
+                    <td>
+                        <input type="text" name="r2c2" class="matrix-input form-control mb-2 mr-sm-2" placeholder="8"/>
+                    </td>
+                    <td>
+                        <input type="text" name="r2c3" class="matrix-input form-control mb-2 mr-sm-2" placeholder="-1"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" name="r3c1" class="matrix-input form-control mb-2 mr-sm-2" placeholder="-1"/>
+                    </td>
+                    <td>
+                        <input type="text" name="r3c2" class="matrix-input form-control mb-2 mr-sm-2" placeholder="-1"/>
+                    </td>
+                    <td>
+                        <input type="text" name="r3c3" class="matrix-input form-control mb-2 mr-sm-2" placeholder="-1"/>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="btn-wrapper">
+                <button type="submit" class="button-style btn"> Choose Image </button>
+                <button type="submit" class="button-style btn"> Apply Filter </button>
+            </div>
+        </form>
+    </div>
+
+{% else %}
+    <div class="no-image-chosen-wrapper d-flex justify-content-center">
+        <h2>You have not chosen an image yet! Choose an image!</h2>
+
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <label class="btn btn-primary" for="my-file-selector">
+                <input id="my-file-selector" type="file" style="display:none"
+                onchange="$('#upload-file-info').html(this.files[0].name)">
+                Choose Image
+            </label>
+            <span class='label label-info' id="upload-file-info"></span>
+            <button type="submit" class="btn button-style"> Upload</button>
+        </form>
+    </div>
+
+{% endif %}
+
+
+
+{% endblock %}
