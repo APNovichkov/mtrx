@@ -44,6 +44,15 @@ td, h3{
     color: #FFFFFF;
 }
 
+.image-upload-buttons-wrapper{
+    margin-top: 10px;
+}
+
+.input-file-label{
+    color: #EEEEEE;
+    padding-left: 10px;
+    padding-right: 15px;
+}
 
 .no-image-chosen-wrapper{
     margin-top: 60px;
