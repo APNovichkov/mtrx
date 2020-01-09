@@ -19,17 +19,19 @@ td, h3{
 }
 
 .matrix-wrapper{
-    margin-top: 100px;
+    margin-top: 80px;
 }
 
 .matrix-input{
-    width: 45px;
+    width: 60px;
+    height: 60px;
     background-color:
     transparent; color: #EEEEEE;
 }
 
 .btn-wrapper{
     margin-top: 40px;
+    text-align: center;
 }
 
 .button-style{
@@ -56,6 +58,18 @@ td, h3{
 
 .no-image-chosen-wrapper{
     margin-top: 60px;
+}
+
+.original-image-wrapper{
+    margin-top: 40px;
+}
+
+.original-image{
+    border: 40px solid;
+    border-color:  rgba(255, 255, 255, .2);
+    border-radius: 15px;
+    height: 30%;
+    width: auto;
 }
 
 .pic-button:hover{

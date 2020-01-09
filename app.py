@@ -3,12 +3,13 @@ from werkzeug.utils import secure_filename
 import os
 from PIL import Image
 
-UPLOAD_FOLDER = os.getcwd() + '/static/uploads'
+UPLOAD_FOLDER = 'static/uploads'
+UPLOAD_FOLDER_FULL = os.path.join(os.getcwd(), UPLOAD_FOLDER)
+
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
-
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER_FULL
 
 # Route Functions
 
@@ -16,15 +17,31 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def welcome():
     """Show the welcome page."""
 
+    print("This is the full upload path: {}".format(UPLOAD_FOLDER_FULL))
+
     return render_template('index.html')
 
 @app.route("/dashboard/<filename>")
 def show_dashboard(filename):
     """Shows the dashboard from which all further actions are taken."""
 
-    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    filepath = "/" + os.path.join(UPLOAD_FOLDER, filename)
 
-    return render_template("dashboard.html", filepath=("/static/uploads/" + filename))
+    return render_template("dashboard.html", filename=filename, filepath=filepath)
+
+@app.route("/generate-image/<filename>", methods=['POST'])
+def generate_image(filename):
+    print("Need to apply filter and generate new image from this file: {}".format(filename))
+
+    rows = 3
+    columns = 3
+
+    items = []
+
+    print("Args in request: {}".format(request.form))
+
+    return redirect(url_for('show_dashboard', filename=filename))
+
 
 @app.route("/upload", methods=['POST'])
 def upload_image():
