@@ -26,22 +26,27 @@ def welcome():
 def show_dashboard(original_filename, edited_filename):
     """Shows the dashboard from which all further actions are taken."""
 
-    filepath = os.path.join(UPLOAD_FOLDER, filename)
+    original_filepath = os.path.join(UPLOAD_FOLDER, original_filename)
+    edited_filepath = os.path.join(UPLOAD_FOLDER, edited_filename)
 
-    return render_template("dashboard.html", filename=filename, filepath=filepath)
+    return render_template("dashboard.html", original_filepath=original_filepath, edited_filepath=edited_filepath)
 
 @app.route("/generate-image/<original_filename>", methods=['POST'])
 def generate_image(original_filename):
     print("Need to apply filter and generate new image from this file: {}".format(filename))
 
+    # Define size of convolution matrix
     rows = 3
+    columns = 3
 
+    # Get filter from input user data
     filter = get_matrix_from_form_data(request.form, rows)
+    print("This is the user inputted filter: {}".format(filter))
+
+
     filepath = get_upload_filepath_from_filename(original_filename)
 
     edited_filename = filtering.apply_filter(filepath, filter)
-
-    print("Output matrix: {}".format(matrix))
 
     return redirect(url_for('show_dashboard', original_filename=filename, edited_filename=edited_filename))
 
