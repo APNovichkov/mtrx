@@ -2,9 +2,10 @@ from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
 import os
 from PIL import Image
+import filtering
 
-UPLOAD_FOLDER = 'static/uploads'
-UPLOAD_FOLDER_FULL = os.path.join(os.getcwd(), UPLOAD_FOLDER)
+UPLOAD_FOLDER = '/static/uploads'
+UPLOAD_FOLDER_FULL = os.getcwd() + UPLOAD_FOLDER
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
@@ -21,25 +22,28 @@ def welcome():
 
     return render_template('index.html')
 
-@app.route("/dashboard/<filename>")
-def show_dashboard(filename):
+@app.route("/dashboard/<original_filename>/<edited_filename>")
+def show_dashboard(original_filename, edited_filename):
     """Shows the dashboard from which all further actions are taken."""
 
-    filepath = "/" + os.path.join(UPLOAD_FOLDER, filename)
+    filepath = os.path.join(UPLOAD_FOLDER, filename)
 
     return render_template("dashboard.html", filename=filename, filepath=filepath)
 
-@app.route("/generate-image/<filename>", methods=['POST'])
-def generate_image(filename):
+@app.route("/generate-image/<original_filename>", methods=['POST'])
+def generate_image(original_filename):
     print("Need to apply filter and generate new image from this file: {}".format(filename))
 
     rows = 3
 
-    matrix = get_matrix_from_form_data(request.form, rows)
+    filter = get_matrix_from_form_data(request.form, rows)
+    filepath = get_upload_filepath_from_filename(original_filename)
+
+    edited_filename = filtering.apply_filter(filepath, filter)
 
     print("Output matrix: {}".format(matrix))
 
-    return redirect(url_for('show_dashboard', filename=filename))
+    return redirect(url_for('show_dashboard', original_filename=filename, edited_filename=edited_filename))
 
 
 @app.route("/upload", methods=['POST'])
@@ -66,6 +70,9 @@ def upload_image():
         return redirect(url_for('show_dashboard', filename=filename))
 
 # Helper Functions
+
+def get_upload_filepath_from_filename(filename):
+    return os.path.join(app.config['UPLOAD_FOLDER'], filename)
 
 def get_matrix_from_form_data(form_data, num_rows):
     matrix = []
