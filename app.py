@@ -34,11 +34,10 @@ def generate_image(filename):
     print("Need to apply filter and generate new image from this file: {}".format(filename))
 
     rows = 3
-    columns = 3
 
-    items = []
+    matrix = get_matrix_from_form_data(request.form, rows)
 
-    print("Args in request: {}".format(request.form))
+    print("Output matrix: {}".format(matrix))
 
     return redirect(url_for('show_dashboard', filename=filename))
 
@@ -67,6 +66,24 @@ def upload_image():
         return redirect(url_for('show_dashboard', filename=filename))
 
 # Helper Functions
+
+def get_matrix_from_form_data(form_data, num_rows):
+    matrix = []
+
+    row_counter = -1
+    form_items_counter = 0
+    for key in request.form:
+        value = request.form.get(key)
+
+        if form_items_counter % num_rows == 0:
+            matrix.append([])
+            row_counter += 1
+
+        matrix[row_counter].append(value)
+        form_items_counter += 1
+
+    return matrix
+
 
 def compress_file(filename):
     """Compress input file and replace it with compressed version in jpg format."""
