@@ -16,9 +16,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER_FULL
 
 @app.route("/")
 def welcome():
-    """Show the welcome page."""
-
-    print("This is the full upload path: {}".format(UPLOAD_FOLDER_FULL))
+    """Show the welcome page where use can upload an image."""
 
     return render_template('index.html')
 
@@ -26,6 +24,8 @@ def welcome():
 def show_dashboard(original_filename, edited_filename):
     """Shows the dashboard from which all further actions are taken."""
 
+    # Get filepaths of images to show on the show_dashboard
+    # These are not full paths
     original_filepath = os.path.join(UPLOAD_FOLDER, original_filename)
     edited_filepath = os.path.join(UPLOAD_FOLDER, edited_filename)
 
@@ -37,15 +37,15 @@ def generate_image(original_filename):
 
     # Define size of convolution matrix
     rows = 3
-    columns = 3
 
     # Get filter from input user data
     filter = get_matrix_from_form_data(request.form, rows)
     print("This is the user inputted filter: {}".format(filter))
 
-
+    # Get filepath for original image
     filepath = get_upload_filepath_from_filename(original_filename)
 
+    # Send that filepath over for processing to filtering module
     edited_filename = filtering.apply_filter(filepath, filter)
 
     return redirect(url_for('show_dashboard', original_filename=filename, edited_filename=edited_filename))
@@ -55,31 +55,41 @@ def generate_image(original_filename):
 def upload_image():
     """Upload and compresses image to local directory for future processing."""
 
+    # Check if file is in request object
     if 'file' not in request.files:
         print("File not in request")
         return redirect(url_for('index'))
 
+    # If it is in request, get the file
     file = request.files['file']
 
+    # Check to make sure that there is an actual file in there
     if file.filename == "":
         print("User did not select file")
         return redirect(url_for('index'))
 
+    # Check if file is allowed and save it in the directory
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
 
+        # Compress the file
         filename = compress_file(filename)
 
+        # Show the dashboard
         return redirect(url_for('show_dashboard', filename=filename))
 
 # Helper Functions
 
 def get_upload_filepath_from_filename(filename):
+    """Return full path to the uploaded file."""
+
     return os.path.join(app.config['UPLOAD_FOLDER'], filename)
 
 def get_matrix_from_form_data(form_data, num_rows):
+    """Get the filter matrix from input form data."""
+
     matrix = []
 
     row_counter = -1
@@ -120,6 +130,8 @@ def compress_file(filename):
     return jpg_filename
 
 def allowed_file(filename):
+    """Return true if inputted file is of valid format."""
+
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 

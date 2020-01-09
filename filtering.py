@@ -25,9 +25,12 @@ def get_random_filter():
     random_int = randint(0, len(list_of_filters) - 1)
     return list_of_filters[random_int]
 
-def apply_filter(image_filepath, filter):
-    """Apply a kernel to input image and return new image."""
+def apply_filter(original_image_filepath, filter, output_path):
+    """Apply a kernel filter to input image and return filename of new image."""
 
+    original_image = img.imread(original_image_filepath)
+
+    # Get dimensions of the input image
     ROWS = img.shape[0]
     COLS = img.shape[1]
 
@@ -38,10 +41,20 @@ def apply_filter(image_filepath, filter):
                 s = 0
                 for ii in range(3):
                     for jj in range(3):
-                        s += img[i + ii][j + jj][k] * filter[ii][jj]
+                        s += original_image[i + ii][j + jj][k] * filter[ii][jj]
                 d[i + 1][j + 1][k] = int(s)
     d = np.array(d)
-    return np.clip(d, 0, 255)
+
+    edited_image = np.clip(d, 0, 255)
+    edited_image = edited_image.astype('uint8')
+
+    edited_image_filename = os.path.basename(original_image_filepath).split('.')[0] + "_edited.jpg"
+
+    edited_image_filepath = os.path.join(output_path, edited_image_filename)
+    img.imsave(edited_image_filepath, edited_image)
+
+    return edited_image_filename
+
 
 # Helper Functions
 
