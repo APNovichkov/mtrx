@@ -21,6 +21,11 @@ list_of_filters = [f_sharp, f_outline]
 
 # Main Functions
 
+def get_filter_by_id(id):
+    """Return filter by id."""
+
+    return list_of_filters[int(id)]
+
 def get_random_filter():
     """Return random filter from premade filters."""
 
@@ -28,7 +33,7 @@ def get_random_filter():
 
     print("Random int i got is: {}".format(random_int))
 
-    return list_of_filters[random_int]
+    return list_of_filters[random_int], random_int
 
 def apply_filter(original_image_filepath, filter, output_path):
     """Apply a kernel filter to input image and return filename of new image."""

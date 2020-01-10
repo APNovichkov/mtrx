@@ -27,8 +27,8 @@ def welcome():
 
     return render_template('index.html')
 
-@app.route("/dashboard/<original_filename>/<edited_filename>")
-def show_dashboard(original_filename, edited_filename):
+@app.route("/dashboard/<original_filename>/<edited_filename>/<filter_id>")
+def show_dashboard(original_filename, edited_filename, filter_id):
     """Shows the dashboard from which all further actions are taken."""
 
     # Get filepaths of images to show on the show_dashboard
@@ -39,12 +39,14 @@ def show_dashboard(original_filename, edited_filename):
 
     edited_filepath = os.path.join(UPLOAD_FOLDER, edited_filename)
 
-    print("Current filter is: {}".format(app.current_filter))
+    current_filter = filtering.get_filter_by_id(filter_id)
+
+    print("Current filter is: {}".format(current_filter))
 
     if edited_filename == "None":
         edited_filepath = "None"
 
-    return render_template("dashboard.html", input_filter=app.current_filter, original_filename=original_filename, original_filepath=original_filepath, edited_filepath=edited_filepath)
+    return render_template("dashboard.html", input_filter=current_filter, original_filename=original_filename, original_filepath=original_filepath, edited_filepath=edited_filepath)
 
 @app.route("/generate-image/<original_filename>", methods=['POST'])
 def generate_image(original_filename):
@@ -55,16 +57,17 @@ def generate_image(original_filename):
 
     # Get filter from input user data
     filter = get_matrix_from_form_data(request.form, rows)
-    app.current_filter = filter
+    
     print("This is the user inputted filter: {}".format(filter))
 
     # Get filepath for original image
     filepath = get_upload_filepath_from_filename(original_filename)
 
+
     # Send that filepath over for processing to filtering module
     edited_filename = filtering.apply_filter(filepath, filter, app.config['UPLOAD_FOLDER'])
 
-    return redirect(url_for('show_dashboard', original_filename=original_filename, edited_filename=edited_filename))
+    return redirect(url_for('show_dashboard', original_filename=original_filename, edited_filename=edited_filename, filter_id=1))
 
 
 @app.route("/upload", methods=['POST'])
@@ -99,14 +102,12 @@ def upload_image():
 
         # Set filter to random filter
 
-        print("filtering filter: {}".format(filtering.get_random_filter))
+        _, filter_id = filtering.get_random_filter()
 
-        app.current_filter = filtering.get_random_filter()
-
-        print("app.current_filter: {}".format(filtering.get_random_filter()))
+        print("filter by id: {}".format(filtering.get_filter_by_id(int(filter_id))))
 
         # Show the dashboard
-        return redirect(url_for('show_dashboard', original_filename=filename, edited_filename="None"))
+        return redirect(url_for('show_dashboard', original_filename=filename, edited_filename="None", filter_id=filter_id))
 
 @app.after_request
 def add_header(r):
