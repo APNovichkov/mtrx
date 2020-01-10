@@ -57,7 +57,7 @@ def generate_image(original_filename):
 
     # Get filter from input user data
     filter = get_matrix_from_form_data(request.form, rows)
-    
+
     print("This is the user inputted filter: {}".format(filter))
 
     # Get filepath for original image
@@ -155,7 +155,7 @@ def compress_file(filename):
 
     # Open input file
     foo = Image.open(filepath)
-    foo = foo.resize((int(foo.size[0] / 10), int(foo.size[1] / 10)), Image.ANTIALIAS)
+    foo = foo.resize((int(foo.size[0] / 5), int(foo.size[1] / 5)), Image.ANTIALIAS)
 
     # Remove old file
     if os.path.exists(filepath):
