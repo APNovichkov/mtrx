@@ -39,6 +39,8 @@ def show_dashboard(original_filename, edited_filename):
 
     edited_filepath = os.path.join(UPLOAD_FOLDER, edited_filename)
 
+    print("Current filter is: {}".format(app.current_filter))
+
     if edited_filename == "None":
         edited_filepath = "None"
 
