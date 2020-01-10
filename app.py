@@ -90,7 +90,7 @@ def upload_image():
 
         # inserted_id = uploads.insert_one(filename).inserted_id
 
-        print("Inserted Id: {}".format(inserted_id))
+        # print("Inserted Id: {}".format(inserted_id))
 
         # Compress the file
         filename = compress_file(filename)
