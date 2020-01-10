@@ -10,7 +10,12 @@ UPLOAD_FOLDER_FULL = os.getcwd() + UPLOAD_FOLDER
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER_FULL
+
+# host = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/mtrxio')
+# client = MongoClient(host=f'{host}?retryWrites=false')
+# db = client.get_default_database()
+# uploads = db['uploads']
 
 app.current_filter = []
 
@@ -82,6 +87,10 @@ def upload_image():
         filename = secure_filename(file.filename)
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
+
+        inserted_id = uploads.insert_one(filename).inserted_id
+
+        print("Inserted Id: {}".format(inserted_id))
 
         # Compress the file
         filename = compress_file(filename)
