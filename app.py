@@ -27,13 +27,16 @@ def show_dashboard(original_filename, edited_filename):
     # Get filepaths of images to show on the show_dashboard
     # These are not full paths
     original_filepath = os.path.join(UPLOAD_FOLDER, original_filename)
+
+    print("Original filepath: {}".format(original_filepath))
+
     edited_filepath = os.path.join(UPLOAD_FOLDER, edited_filename)
 
-    return render_template("dashboard.html", original_filepath=original_filepath, edited_filepath=edited_filepath)
+    return render_template("dashboard.html", original_filename=original_filename, original_filepath=original_filepath, edited_filepath=edited_filepath)
 
 @app.route("/generate-image/<original_filename>", methods=['POST'])
 def generate_image(original_filename):
-    print("Need to apply filter and generate new image from this file: {}".format(filename))
+    print("Need to apply filter and generate new image from this file: {}".format(original_filename))
 
     # Define size of convolution matrix
     rows = 3
@@ -46,7 +49,7 @@ def generate_image(original_filename):
     filepath = get_upload_filepath_from_filename(original_filename)
 
     # Send that filepath over for processing to filtering module
-    edited_filename = filtering.apply_filter(filepath, filter)
+    edited_filename = filtering.apply_filter(filepath, filter, app.config['UPLOAD_FOLDER'])
 
     return redirect(url_for('show_dashboard', original_filename=filename, edited_filename=edited_filename))
 
@@ -78,7 +81,7 @@ def upload_image():
         filename = compress_file(filename)
 
         # Show the dashboard
-        return redirect(url_for('show_dashboard', filename=filename))
+        return redirect(url_for('show_dashboard', original_filename=filename, edited_filename="None"))
 
 # Helper Functions
 

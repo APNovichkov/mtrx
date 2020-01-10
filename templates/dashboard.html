@@ -4,7 +4,7 @@
 
 
 <div class="matrix-wrapper d-flex justify-content-center">
-    <form action="/generate-image/{{ filename }}" method="POST">
+    <form action="/generate-image/{{ original_filename }}" method="POST">
         <table style="margin-left: 30px">
             <tr>
                 <td>
@@ -52,7 +52,7 @@
 <div class="row original-image-wrapper">
     <div class="col-md-3"></div>
     <div class="col-md-6 text-center">
-        <img class="original-image" src="{{ filepath }}" alt="original-image">
+        <img class="original-image" src="{{ original_filepath }}" alt="original-image">
     </div>
     <div class="col-md-3"></div>
 </div>

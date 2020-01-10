@@ -1,5 +1,6 @@
 from random import randint
 import matplotlib.image as img
+import numpy as np
 
 # Some default kernels
 
@@ -31,8 +32,8 @@ def apply_filter(original_image_filepath, filter, output_path):
     original_image = img.imread(original_image_filepath)
 
     # Get dimensions of the input image
-    ROWS = img.shape[0]
-    COLS = img.shape[1]
+    ROWS = original_image.shape[0]
+    COLS = original_image.shape[1]
 
     d = np.zeros((ROWS, COLS, 3), dtype=int).tolist()
     for k in range(3):
