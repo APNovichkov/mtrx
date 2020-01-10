@@ -25,6 +25,9 @@ def get_random_filter():
     """Return random filter from premade filters."""
 
     random_int = randint(0, len(list_of_filters) - 1)
+
+    print("Random int i got is: {}".format(random_int))
+
     return list_of_filters[random_int]
 
 def apply_filter(original_image_filepath, filter, output_path):

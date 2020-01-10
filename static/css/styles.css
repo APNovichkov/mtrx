@@ -1,5 +1,5 @@
 body {
-     background-image: url('/static/images/background-3.jpg');
+     background-image: url('/static/images/background-4.jpg');
      background-size: cover;
 }
 
@@ -66,7 +66,15 @@ td, h3{
 
 .original-image{
     border: 40px solid;
-    border-color:  rgba(255, 255, 255, .2);
+    border-color:  rgba(200, 200, 200, .5);
+    border-radius: 15px;
+    height: 100%;
+    width: auto;
+}
+
+.filtered-image{
+    border: 40px solid;
+    border-color:  rgba(200, 200, 200, .5);
     border-radius: 15px;
     height: 100%;
     width: auto;

@@ -12,6 +12,8 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER_FULL
 
+app.current_filter = []
+
 # Route Functions
 
 @app.route("/")
@@ -35,7 +37,7 @@ def show_dashboard(original_filename, edited_filename):
     if edited_filename == "None":
         edited_filepath = "None"
 
-    return render_template("dashboard.html", original_filename=original_filename, original_filepath=original_filepath, edited_filepath=edited_filepath)
+    return render_template("dashboard.html", input_filter=app.current_filter, original_filename=original_filename, original_filepath=original_filepath, edited_filepath=edited_filepath)
 
 @app.route("/generate-image/<original_filename>", methods=['POST'])
 def generate_image(original_filename):
@@ -46,6 +48,7 @@ def generate_image(original_filename):
 
     # Get filter from input user data
     filter = get_matrix_from_form_data(request.form, rows)
+    app.current_filter = filter
     print("This is the user inputted filter: {}".format(filter))
 
     # Get filepath for original image
@@ -83,8 +86,23 @@ def upload_image():
         # Compress the file
         filename = compress_file(filename)
 
+        # Set filter to random filter
+        app.current_filter = filtering.get_random_filter()
+
         # Show the dashboard
         return redirect(url_for('show_dashboard', original_filename=filename, edited_filename="None"))
+
+@app.after_request
+def add_header(r):
+    """
+    Add headers to both force latest IE rendering engine or Chrome Frame,
+    and also to cache the rendered page for 10 minutes.
+    """
+    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    r.headers["Pragma"] = "no-cache"
+    r.headers["Expires"] = "0"
+    r.headers['Cache-Control'] = 'public, max-age=0'
+    return r
 
 # Helper Functions
 
