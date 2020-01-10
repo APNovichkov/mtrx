@@ -88,7 +88,7 @@ def upload_image():
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
 
-        inserted_id = uploads.insert_one(filename).inserted_id
+        # inserted_id = uploads.insert_one(filename).inserted_id
 
         print("Inserted Id: {}".format(inserted_id))
 
