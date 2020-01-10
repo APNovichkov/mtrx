@@ -32,6 +32,9 @@ def show_dashboard(original_filename, edited_filename):
 
     edited_filepath = os.path.join(UPLOAD_FOLDER, edited_filename)
 
+    if edited_filename == "None":
+        edited_filepath = "None"
+
     return render_template("dashboard.html", original_filename=original_filename, original_filepath=original_filepath, edited_filepath=edited_filepath)
 
 @app.route("/generate-image/<original_filename>", methods=['POST'])
@@ -51,7 +54,7 @@ def generate_image(original_filename):
     # Send that filepath over for processing to filtering module
     edited_filename = filtering.apply_filter(filepath, filter, app.config['UPLOAD_FOLDER'])
 
-    return redirect(url_for('show_dashboard', original_filename=filename, edited_filename=edited_filename))
+    return redirect(url_for('show_dashboard', original_filename=original_filename, edited_filename=edited_filename))
 
 
 @app.route("/upload", methods=['POST'])
@@ -104,7 +107,7 @@ def get_matrix_from_form_data(form_data, num_rows):
             matrix.append([])
             row_counter += 1
 
-        matrix[row_counter].append(value)
+        matrix[row_counter].append(int(value))
         form_items_counter += 1
 
     return matrix
@@ -117,7 +120,7 @@ def compress_file(filename):
 
     # Open input file
     foo = Image.open(filepath)
-    foo = foo.resize((int(foo.size[0] / 3), int(foo.size[1] / 3)), Image.ANTIALIAS)
+    foo = foo.resize((int(foo.size[0] / 10), int(foo.size[1] / 10)), Image.ANTIALIAS)
 
     # Remove old file
     if os.path.exists(filepath):

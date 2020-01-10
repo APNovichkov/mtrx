@@ -1,6 +1,7 @@
 from random import randint
 import matplotlib.image as img
 import numpy as np
+import os
 
 # Some default kernels
 
@@ -31,10 +32,15 @@ def apply_filter(original_image_filepath, filter, output_path):
 
     original_image = img.imread(original_image_filepath)
 
+    print("Starting application of filter")
+
     # Get dimensions of the input image
     ROWS = original_image.shape[0]
     COLS = original_image.shape[1]
 
+    print("Size of input image is: {}x{}".format(ROWS, COLS))
+
+    print("Beginning matrix multiplication")
     d = np.zeros((ROWS, COLS, 3), dtype=int).tolist()
     for k in range(3):
         for i in range(ROWS - 2):
@@ -46,13 +52,17 @@ def apply_filter(original_image_filepath, filter, output_path):
                 d[i + 1][j + 1][k] = int(s)
     d = np.array(d)
 
+    print("Done with matrix multiplication")
+
+    print("Saving file with '_edited.jpg' postfix")
     edited_image = np.clip(d, 0, 255)
     edited_image = edited_image.astype('uint8')
 
     edited_image_filename = os.path.basename(original_image_filepath).split('.')[0] + "_edited.jpg"
-
     edited_image_filepath = os.path.join(output_path, edited_image_filename)
+
     img.imsave(edited_image_filepath, edited_image)
+    print("Saved filtering file")
 
     return edited_image_filename
 

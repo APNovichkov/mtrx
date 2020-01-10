@@ -8,7 +8,7 @@
         <table style="margin-left: 30px">
             <tr>
                 <td>
-                    <input type="number" name="r1c1" class="matrix-input form-control mb-2 mr-sm-2" placeholder="-1" min="0" max="20" step="1" value="6">
+                    <input type="number" name="r1c1" class="matrix-input form-control mb-2 mr-sm-2" placeholder="-1" min="-20" max="20" step="1" value="6">
                 </td>
                 <td>
                     <input type="text" name="r1c2" class="matrix-input form-control mb-2 mr-sm-2" placeholder="-1" value="-1"/>
@@ -22,7 +22,7 @@
                     <input type="text" name="r2c1" class="matrix-input form-control mb-2 mr-sm-2" placeholder="-1" value="-1"/>
                 </td>
                 <td>
-                    <input type="text" name="r2c2" class="matrix-input form-control mb-2 mr-sm-2" placeholder="8" value="-8"/>
+                    <input type="text" name="r2c2" class="matrix-input form-control mb-2 mr-sm-2" placeholder="8" value="8"/>
                 </td>
                 <td>
                     <input type="text" name="r2c3" class="matrix-input form-control mb-2 mr-sm-2" placeholder="-1" value="-1"/>
@@ -48,14 +48,33 @@
 </div>
 
 
-
-<div class="row original-image-wrapper">
-    <div class="col-md-3"></div>
-    <div class="col-md-6 text-center">
-        <img class="original-image" src="{{ original_filepath }}" alt="original-image">
+<div class="image-wrapper" style="margin-bottom: 100px">
+    {% if edited_filepath != "None" %}
+    <div class="row original-image-wrapper">
+        <div class="col-md-5 text-center">
+            <h4 style="color: #EEEEEE">Original Image</h4>
+            <img class="original-image" src="{{ original_filepath }}" alt="original-image">
+        </div>
+        <div class="col-md-2 text-center" style="padding-top: 250px">
+            <h1>--></h1>
+        </div>
+        <div class="col-md-5 text-center">
+            <h4 style="color: #EEEEEE">Edited Image</h4>
+            <img class="original-image" src="{{ edited_filepath }}" alt="original-image">
+        </div>
     </div>
-    <div class="col-md-3"></div>
+    {% else %}
+    <div class="row original-image-wrapper">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 text-center">
+            <h4 style="color: #EEEEEE">Original Image</h4>
+            <img class="original-image" src="{{ original_filepath }}" alt="original-image">
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+    {% endif %}
 </div>
+
 
 
 {% endblock %}
