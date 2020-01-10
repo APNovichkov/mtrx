@@ -98,7 +98,12 @@ def upload_image():
         filename = compress_file(filename)
 
         # Set filter to random filter
+
+        print("filtering filter: {}".format(filtering.get_random_filter))
+
         app.current_filter = filtering.get_random_filter()
+
+        print("app.current_filter: {}".format(filtering.get_random_filter()))
 
         # Show the dashboard
         return redirect(url_for('show_dashboard', original_filename=filename, edited_filename="None"))
