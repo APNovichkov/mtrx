@@ -1,91 +1,95 @@
 body {
-     background-image: url('/static/images/background-4.jpg');
-     background-size: cover;
+  background-image: url("/static/images/background-4.jpg");
+  background-size: cover;
 }
 
-table, th, td {
-    border: 1px solid #EEEEEE;
+table,
+th,
+td {
+  border: 1px solid #eeeeee;
 }
 
-td, h3{
-    padding-top: 10px;
-    padding-left: 10px;
-    /* padding-right: 10px; */
-    color: #EEEEEE
+td,
+h3 {
+  padding-top: 10px;
+  padding-left: 10px;
+  /* padding-right: 10px; */
+  color: #eeeeee;
 }
 
-.form-control::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-  color: #EEEEEE;
+.form-control::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: #eeeeee;
 }
 
-.matrix-wrapper{
-    margin-top: 80px;
+.matrix-wrapper {
+  margin-top: 80px;
 }
 
-.matrix-input{
-    width: 60px;
-    height: 60px;
-    background-color:
-    transparent; color: #EEEEEE;
+.matrix-input {
+  width: 60px;
+  height: 60px;
+  background-color: transparent;
+  color: #eeeeee;
 }
 
-.btn-wrapper{
-    margin-top: 40px;
-    text-align: center;
+.btn-wrapper {
+  margin-top: 40px;
+  text-align: center;
 }
 
-.button-style{
-    background-color: transparent;
-    border-color: #EEEEEE;
-    color: #EEEEEE;
+.button-style {
+  background-color: transparent;
+  border-color: #eeeeee;
+  color: #eeeeee;
 }
 
-.button-style:hover{
-    background-color: #fe9801;
-    border-color: #fe9801;
-    color: #FFFFFF;
+.button-style:hover {
+  background-color: #fe9801;
+  border-color: #fe9801;
+  color: #ffffff;
 }
 
-.image-upload-buttons-wrapper{
-    margin-top: 10px;
+.image-upload-buttons-wrapper {
+  margin-top: 10px;
 }
 
-.input-file-label{
-    color: #EEEEEE;
-    padding-left: 10px;
-    padding-right: 15px;
+.input-file-label {
+  color: #eeeeee;
+  padding-left: 10px;
+  padding-right: 15px;
 }
 
-.no-image-chosen-wrapper{
-    margin-top: 60px;
+.no-image-chosen-wrapper {
+  margin-top: 60px;
 }
 
-.original-image-wrapper{
-    margin-top: 40px;
+.original-image-wrapper {
+  margin-top: 40px;
 }
 
-.original-image{
-    border: 40px solid;
-    border-color:  rgba(200, 200, 200, .5);
-    border-radius: 15px;
-    height: 100%;
-    width: auto;
+.original-image {
+  border: 40px solid;
+  border-color: rgba(200, 200, 200, 0.5);
+  border-radius: 15px;
+  height: 100%;
+  width: auto;
 }
 
-.filtered-image{
-    border: 40px solid;
-    border-color:  rgba(200, 200, 200, .5);
-    border-radius: 15px;
-    height: 100%;
-    width: auto;
+.filtered-image {
+  border: 40px solid;
+  border-color: rgba(200, 200, 200, 0.5);
+  border-radius: 15px;
+  height: 100%;
+  width: auto;
 }
 
-.pic-button:hover{
-    background-color: #fe9801;
-    border-color: #fe9801;
-    color: #FFFFFF;
+.pic-button:hover {
+  background-color: #fe9801;
+  border-color: #fe9801;
+  color: #ffffff;
 }
 
-h2{
-    color: #EEEEEE;
+h2 {
+  color: #eeeeee;
 }
